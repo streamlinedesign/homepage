@@ -12,9 +12,8 @@
             zoomIn: 'Uvećaj',
             theme: 'Promijeni temu',
             projects: 'Projekti',
-            menuDesc: 'Digitalni i fizički paketi brendiranja za\u00a0ugostiteljstvo.',
+            menuDesc: 'Digitalni i fizički paketi brendiranja za kafiće, restorane i\u00a0klubove.',
             pressDesc: 'Dnevni agregat novosti i\u00a0igrice.',
-            chessDesc: 'U izradi.',
             contact: 'Kontakt',
         },
         en: {
@@ -25,9 +24,8 @@
             zoomIn: 'Zoom in',
             theme: 'Toggle theme',
             projects: 'Projects',
-            menuDesc: 'Digital and physical branding packages for\u00a0hospitality.',
+            menuDesc: 'Digital and physical branding packages for cafés, restaurants and\u00a0clubs.',
             pressDesc: 'Daily news aggregator and\u00a0games.',
-            chessDesc: 'Work in progress.',
             contact: 'Contact',
         },
     };
