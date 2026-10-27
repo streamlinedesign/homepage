@@ -128,11 +128,10 @@ body {
     position: relative;
     display: grid;
     grid-template-columns: 1fr auto;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto 1fr;
     grid-template-areas:
         "name arrow"
-        "desc desc"
-        "version version";
+        "desc desc";
     gap: var(--space-4);
     min-height: calc(var(--grid-major) * 3);
     padding: var(--space-5);
@@ -191,18 +190,6 @@ a.project:hover .project-arrow {
     color: var(--accent);
 }
 
-/* version tag, like a git tag */
-.version {
-    grid-area: version;
-    justify-self: start;
-    padding: var(--space-1) var(--space-2);
-    border: var(--border-width) solid var(--border);
-    border-radius: var(--radius-sm);
-    font-size: var(--text-xs);
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-}
-
 /* ---------- tablet ---------- */
 
 @media (max-width: 1100px) {
@@ -234,16 +221,17 @@ a.project:hover .project-arrow {
         margin-bottom: var(--space-5);
     }
 
+    /* cards keep their own height and spread out evenly down the screen */
     .project-list {
         flex: 1;
         min-height: 0;
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(3, 1fr);
-        gap: var(--space-4);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .project {
-        min-height: 0;
+        min-height: calc(var(--grid-major) * 1.5);
         gap: var(--space-2);
         padding: var(--space-4);
     }
