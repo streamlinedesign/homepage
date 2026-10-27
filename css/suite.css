@@ -104,6 +104,20 @@ body {
     gap: var(--space-1);
 }
 
+/* the phone-only lock (see the phone section); shows the state it is in */
+.lock {
+    display: none;
+}
+
+.lock .lock-closed,
+.lock.is-locked .lock-open {
+    display: none;
+}
+
+.lock.is-locked .lock-closed {
+    display: block;
+}
+
 /* header controls share one 32px height so they line up */
 .site-header .header-actions {
     gap: var(--space-3);
@@ -302,14 +316,27 @@ a.project:focus-visible {
 /* ---------- mobile ---------- */
 
 @media (max-width: 720px) {
-    /* phones: no panning or zooming (js/canvas.js stands down at this width);
-       the heading and the three cards fill one screen, and the page scrolls
-       instead of cutting a card off when the screen is too short for them */
-    .canvas {
+    /* phones: the heading and the three cards fill one screen. The sheet
+       still roams (drag, pinch) until the lock button is pressed; locked, it
+       eases back and the page only scrolls, if the screen is too short */
+    .canvas.is-locked {
         overflow-y: auto;
         background-attachment: local;
         cursor: auto;
         touch-action: auto;
+    }
+
+    /* the ease back when locking */
+    .canvas.is-settling {
+        transition: background-position .5s var(--ease), background-size .5s var(--ease);
+    }
+
+    .canvas.is-settling .board {
+        transition: transform .5s var(--ease);
+    }
+
+    .lock {
+        display: inline-flex;
     }
 
     #projects {

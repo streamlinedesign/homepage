@@ -2,13 +2,17 @@
 // or hold the arrow keys. Zoom with the − / + buttons, the - and + keys,
 // ctrl + wheel, a trackpad pinch or two fingers. The grid has no edges;
 // Home, 0 or "Projekti" brings you back to the start at full size.
-// On phones (`phone` below, same width as suite.css) the page is one still screen.
+// On phones (`phone` below, same width as suite.css) the sheet roams too, until
+// the lock button is pressed: then the view eases back and stays put as one screen.
 (() => {
     const canvas = document.querySelector('[data-canvas]');
     const board = document.querySelector('[data-board]');
     if (!canvas || !board) return;
 
     const phone = matchMedia('(max-width: 720px)');
+    const lockButton = document.querySelector('[data-lock]');
+    let locked = false;  // phones start unlocked
+    const frozen = () => phone.matches && locked;
 
     const KEY_SPEED = 900;   // px per second while an arrow is held
     const FRICTION = 4;      // how fast a flick slows down (higher = shorter glide)
@@ -32,7 +36,7 @@
     const clamp = z => Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, z));
 
     function apply() {
-        if (phone.matches) {
+        if (frozen()) {
             board.style.transform = canvas.style.backgroundPosition = '';
             canvas.style.removeProperty('--zoom');
             return;
@@ -118,7 +122,7 @@
     }
 
     canvas.addEventListener('pointerdown', e => {
-        if (e.button !== 0 || phone.matches) return;
+        if (e.button !== 0 || frozen()) return;
         ease = null;
         vel.x = vel.y = 0;
         pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
@@ -197,7 +201,7 @@
     // ---------- wheel and trackpad ----------
 
     canvas.addEventListener('wheel', e => {
-        if (phone.matches) return;
+        if (frozen()) return;
         e.preventDefault();
         ease = null;
         vel.x = vel.y = 0;
@@ -221,7 +225,7 @@
 
     addEventListener('keydown', e => {
         if (e.target.closest('input, textarea, select, [contenteditable]')) return;
-        if (e.ctrlKey || e.metaKey || e.altKey || phone.matches) return;  // leave browser shortcuts alone
+        if (e.ctrlKey || e.metaKey || e.altKey || frozen()) return;  // leave browser shortcuts alone
         if (ARROWS.includes(e.key)) {
             e.preventDefault();
             ease = null;
@@ -252,7 +256,31 @@
         recenter();
     }));
 
-    // rotating or resizing into phone width drops back to the plain layout
+    // ---------- phone lock ----------
+
+    function setLocked(next) {
+        locked = next;
+        canvas.classList.toggle('is-locked', locked);
+        if (lockButton) {
+            lockButton.setAttribute('aria-pressed', String(locked));
+            lockButton.classList.toggle('is-locked', locked);
+        }
+        if (locked) {
+            // ease back to the start, then hold still
+            vel.x = vel.y = 0;
+            pos.x = pos.y = 0;
+            zoom = 1;
+            ease = null;
+            canvas.scrollTo({ top: 0, behavior: reduced.matches ? 'auto' : 'smooth' });
+            canvas.classList.add('is-settling');
+            setTimeout(() => canvas.classList.remove('is-settling'), 600);
+        }
+        apply();
+    }
+
+    if (lockButton) lockButton.addEventListener('click', () => setLocked(!locked));
+
+    // rotating or resizing across the phone width starts from the beginning again
     phone.addEventListener('change', () => {
         pos.x = pos.y = vel.x = vel.y = 0;
         zoom = 1;
