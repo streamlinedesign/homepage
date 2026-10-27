@@ -62,6 +62,7 @@ body {
 
 .site-header a,
 .site-header button,
+.site-header .lang,
 .site-footer p,
 .site-footer nav {
     pointer-events: auto;
@@ -101,6 +102,37 @@ body {
 .zoom {
     display: flex;
     gap: var(--space-1);
+}
+
+/* header controls share one 32px height so they line up */
+.site-header .header-actions {
+    gap: var(--space-3);
+}
+
+#theme {
+    width: 32px;
+    height: 32px;
+    margin-right: -7px;  /* the icon, not its hover box, lines up with the page edge */
+}
+
+#theme svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* HR / EN, a small segmented control (see .segmented in base.css) */
+.lang {
+    height: 32px;
+    padding: 3px;
+    gap: 2px;
+}
+
+.lang label {
+    display: grid;
+    place-items: center;
+    min-width: 36px;
+    padding: 0 var(--space-2);
+    font-size: var(--text-xs);
 }
 
 /* ---------- project sheets ---------- */
