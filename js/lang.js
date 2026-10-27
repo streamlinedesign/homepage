@@ -1,6 +1,7 @@
 // HR / EN switch. Every translated text is here; the page marks them with
 // data-i18n (text), data-i18n-aria-label and data-i18n-content (attributes).
 // Project names stay the same in both languages, so they are not in here.
+// \u00a0 is a non-breaking space: it keeps the last two words together (no widows).
 (() => {
     const TEXT = {
         hr: {
@@ -11,9 +12,9 @@
             zoomIn: 'Uvećaj',
             theme: 'Promijeni temu',
             projects: 'Projekti',
-            menuDesc: 'Digitalni i fizički paketi brendiranja za ugostiteljstvo.',
-            pressDesc: 'Opis stiže uskoro.',
-            chessDesc: 'Šah s maglom rata. U ranoj fazi.',
+            menuDesc: 'Digitalni i fizički paketi brendiranja za\u00a0ugostiteljstvo.',
+            pressDesc: 'Dnevni agregat novosti i\u00a0igrice.',
+            chessDesc: 'U izradi.',
             contact: 'Kontakt',
         },
         en: {
@@ -24,9 +25,9 @@
             zoomIn: 'Zoom in',
             theme: 'Toggle theme',
             projects: 'Projects',
-            menuDesc: 'Digital and physical branding packages for hospitality.',
-            pressDesc: 'Description coming soon.',
-            chessDesc: 'Fog of war chess. Early stage.',
+            menuDesc: 'Digital and physical branding packages for\u00a0hospitality.',
+            pressDesc: 'Daily news aggregator and\u00a0games.',
+            chessDesc: 'Work in progress.',
             contact: 'Contact',
         },
     };

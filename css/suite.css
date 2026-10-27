@@ -120,19 +120,42 @@ body {
     height: 18px;
 }
 
-/* HR / EN, a small segmented control (see .segmented in base.css) */
+/* HR / EN, a small segmented control (see .segmented in base.css);
+   one pill slides under the chosen language */
 .lang {
+    position: relative;
     height: 32px;
     padding: 3px;
     gap: 2px;
 }
 
+.lang::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc((100% - 8px) / 2);
+    border-radius: calc(var(--radius) - 3px);
+    background: var(--fg);
+    transition: transform .25s var(--ease);
+}
+
+.lang:has(input[value="en"]:checked)::before {
+    transform: translateX(calc(100% + 2px));
+}
+
 .lang label {
+    z-index: 1;
     display: grid;
     place-items: center;
     min-width: 36px;
     padding: 0 var(--space-2);
     font-size: var(--text-xs);
+}
+
+.lang label:has(input:checked) {
+    background: transparent;
 }
 
 /* ---------- project sheets ---------- */
@@ -153,7 +176,8 @@ body {
     gap: var(--space-8);
 }
 
-/* solid card; four corner marks frame it, hovering draws the full border */
+/* solid card; four corner marks frame it, and on hover they grow along
+   the edges until they meet and draw the full border */
 .project {
     --tick-color: var(--fg);
 
@@ -170,26 +194,59 @@ body {
     padding: var(--space-5);
     line-height: var(--line-height);
     background:
-        linear-gradient(var(--tick-color), var(--tick-color)) top left / var(--tick) var(--tick-width),
-        linear-gradient(var(--tick-color), var(--tick-color)) top left / var(--tick-width) var(--tick),
-        linear-gradient(var(--tick-color), var(--tick-color)) top right / var(--tick) var(--tick-width),
-        linear-gradient(var(--tick-color), var(--tick-color)) top right / var(--tick-width) var(--tick),
-        linear-gradient(var(--tick-color), var(--tick-color)) bottom left / var(--tick) var(--tick-width),
-        linear-gradient(var(--tick-color), var(--tick-color)) bottom left / var(--tick-width) var(--tick),
-        linear-gradient(var(--tick-color), var(--tick-color)) bottom right / var(--tick) var(--tick-width),
-        linear-gradient(var(--tick-color), var(--tick-color)) bottom right / var(--tick-width) var(--tick);
+        linear-gradient(var(--tick-color), var(--tick-color)) top left,
+        linear-gradient(var(--tick-color), var(--tick-color)) top left,
+        linear-gradient(var(--tick-color), var(--tick-color)) top right,
+        linear-gradient(var(--tick-color), var(--tick-color)) top right,
+        linear-gradient(var(--tick-color), var(--tick-color)) bottom left,
+        linear-gradient(var(--tick-color), var(--tick-color)) bottom left,
+        linear-gradient(var(--tick-color), var(--tick-color)) bottom right,
+        linear-gradient(var(--tick-color), var(--tick-color)) bottom right;
+    /* each corner is two lines: one along the top or bottom, one along the side */
+    --h: var(--tick) var(--tick-width);
+    --v: var(--tick-width) var(--tick);
+    background-size: var(--h), var(--v), var(--h), var(--v), var(--h), var(--v), var(--h), var(--v);
     background-repeat: no-repeat;
     background-color: var(--card-bg);
     -webkit-user-drag: none;
-    transition: box-shadow var(--duration);
+    transition: background-size .45s var(--ease), transform var(--duration-press) var(--ease);
+    animation: enter var(--duration-enter) var(--ease) backwards;
 }
 
-a.project:hover {
-    box-shadow: inset 0 0 0 var(--tick-width) var(--fg);
+/* pressing a card gives a little, but not while the sheet is being dragged */
+a.project:active {
+    transform: scale(.985);
 }
 
-a.project:hover h4 {
-    text-decoration: underline;
+.canvas.is-dragging .project {
+    transform: none;
+}
+
+/* the heading and cards drift in one after another on load */
+@keyframes enter {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+        filter: blur(4px);
+    }
+}
+
+.section-head { animation: enter var(--duration-enter) var(--ease) backwards; }
+.project:nth-child(1) { animation-delay: 60ms; }
+.project:nth-child(2) { animation-delay: 120ms; }
+.project:nth-child(3) { animation-delay: 180ms; }
+
+/* hover effects only where there is a real pointer, so taps don't leave them stuck */
+@media (hover: hover) and (pointer: fine) {
+    a.project:hover {
+        --h: calc(50% + 1px) var(--tick-width);
+        --v: var(--tick-width) calc(50% + 1px);
+    }
+
+    a.project:hover .project-arrow {
+        color: var(--fg);
+        transform: translateX(3px);
+    }
 }
 
 a.project:focus-visible {
@@ -206,19 +263,17 @@ a.project:focus-visible {
 .project p {
     grid-area: desc;
     color: var(--accent);
+    text-wrap: pretty;  /* no lone last word */
 }
 
 .project-arrow {
     grid-area: arrow;
     align-self: center;
     color: var(--accent);
+    transition: color var(--duration) var(--ease), transform var(--duration) var(--ease);
 }
 
-a.project:hover .project-arrow {
-    color: var(--fg);
-}
-
-/* a project without a page yet: not a link, dimmed */
+/* a project that isn't available yet: not a link, dimmed */
 .project.is-quiet h4 {
     color: var(--accent);
 }

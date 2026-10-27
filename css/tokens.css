@@ -54,8 +54,11 @@
     --border-width: 1px;
 
     /* ---------- motion ---------- */
-    --ease: cubic-bezier(.2, .7, .2, 1);
-    --duration: .2s;
+    /* a strong ease-out: quick to respond, soft to settle */
+    --ease: cubic-bezier(.23, 1, .32, 1);
+    --duration: .2s;          /* hovers, colors */
+    --duration-press: .16s;   /* buttons pressing in */
+    --duration-enter: .6s;    /* things appearing */
 }
 
 /* ---------- semantic colors (light / dark) ---------- */
