@@ -1,32 +1,39 @@
 /* =========================================================
-   Suite homepage: an endless blueprint sheet (js/canvas.js) that pans
-   and zooms, with the project cards on it.
-   Values come from tokens.css; the paper's own knobs are below.
+   Suite homepage: one massive blueprint sheet (js/canvas.js) that pans
+   and zooms in every direction, drawn with Blueprint Paper (the kit is
+   loaded from the CDN in index.html). This file only places things on the
+   sheet and styles the fixed header and footer.
    ========================================================= */
 
 :root {
-    --grid: 16px;                          /* small square */
-    --grid-major: calc(var(--grid) * 5);   /* every 5th line is stronger */
-    --grid-line: rgba(5, 5, 5, 0.05);
-    --grid-line-major: rgba(5, 5, 5, 0.1);
-    --tick: 12px;                          /* corner marks on each project */
-    --tick-width: 1px;
-    --card-bg: var(--bg);                  /* cards cover the grid */
-    --board-top: 28vh;                     /* how far down the cards start */
+    --grid: 26px;                              /* small square, same as the kit's */
+    --grid-major: calc(var(--grid) * 5);       /* every 5th line is stronger */
+    --board-top: 28vh;                         /* how far down the projects start */
+    --header-height: 72px;
+    --gutter: 24px;
+    --max-width: 1240px;
 }
 
-:root[data-theme="dark"] {
-    --grid-line: rgba(255, 250, 189, 0.05);
-    --grid-line-major: rgba(255, 250, 189, 0.1);
+/* the kit's dark paper is the default; the "light" theme is its whiteprint */
+:root[data-theme="light"] {
+    --bp-ground: #F3F6FB;
+    --bp-ink: #0B2F6E;
+    --bp-ink-78: rgba(11, 47, 110, .78);
+    --bp-ink-62: rgba(11, 47, 110, .62);
+    --bp-ink-20: rgba(11, 47, 110, .16);
+    --bp-ink-09: rgba(11, 47, 110, .09);
+    --bp-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%230B2F6E' stroke-width='1.25'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+    color-scheme: light;
 }
 
-/* ---------- paper ---------- */
+/* ---------- page ---------- */
 
-html,
-body {
-    height: 100%;
-    overflow: hidden;
-}
+html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+body { margin: 0; }
+h3, h4, p { margin: 0; }
+a { color: inherit; }
+svg { display: block; }
+[hidden] { display: none !important; }
 
 /* header and footer stay put; the sheet moves under them */
 .site-header,
@@ -36,37 +43,83 @@ body {
     right: 0;
     z-index: 2;
     pointer-events: none;
+    padding-left: max(var(--gutter), calc((100% - var(--max-width)) / 2 + var(--gutter)));
+    padding-right: max(var(--gutter), calc((100% - var(--max-width)) / 2 + var(--gutter)));
 }
 
 .site-header {
     top: 0;
-    max-width: none;
-    padding-left: max(var(--gutter), calc((100% - var(--max-width)) / 2 + var(--gutter)));
-    padding-right: max(var(--gutter), calc((100% - var(--max-width)) / 2 + var(--gutter)));
-    background: linear-gradient(var(--bg) 55%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+    background: linear-gradient(var(--bp-ground) 55%, transparent);
 }
 
-/* the sheet fades out under the footer so its text stays readable */
 .site-footer {
     bottom: 0;
-    max-width: none;
-    padding-top: var(--space-7);
-    padding-left: max(var(--gutter), calc((100% - var(--max-width)) / 2 + var(--gutter)));
-    padding-right: max(var(--gutter), calc((100% - var(--max-width)) / 2 + var(--gutter)));
-    background: linear-gradient(transparent, var(--bg) var(--space-7));
+    padding-top: 48px;
+    padding-bottom: 20px;
+    background: linear-gradient(transparent, var(--bp-ground) 48px);
 }
 
 .site-footer .footer-inner {
-    padding-top: var(--space-5);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 16px;
+    border-top: var(--bp-stroke) solid var(--bp-ink-62);
 }
 
 .site-header a,
 .site-header button,
 .site-header .lang,
+.site-header .theme-field,
 .site-footer p,
 .site-footer nav {
     pointer-events: auto;
 }
+
+.brand {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-decoration: none;
+}
+.brand:hover { text-decoration: none; }
+.brand-word { font-size: var(--bp-display-sm); font-weight: 300; letter-spacing: -.01em; }
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* HR / EN: two small buttons, the chosen one solid */
+.lang { display: inline-flex; }
+.lang label {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 36px; height: var(--bp-control-sm); padding: 0 8px;
+    border: var(--bp-stroke) solid var(--bp-ink);
+    font-size: var(--bp-label-sm); font-weight: 500; letter-spacing: var(--bp-track); text-transform: uppercase;
+    cursor: pointer;
+    transition: background var(--bp-speed-fast) linear, color var(--bp-speed-fast) linear;
+}
+.lang label + label { margin-left: calc(-1 * var(--bp-stroke)); }
+.lang label:hover { background: var(--bp-ink-20); }
+.lang label:has(input:checked) { background: var(--bp-ink); color: var(--bp-ground); }
+.lang input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.lang label:has(input:focus-visible) { outline: var(--bp-stroke) solid var(--bp-ink); outline-offset: 2px; }
+
+.theme-field { gap: 8px; }
+
+/* the phone-only lock (see the phone section); shows the state it is in */
+.lock { display: none; }
+.lock .lock-closed,
+.lock.is-locked .lock-open { display: none; }
+.lock.is-locked .lock-closed { display: block; }
+
+/* ---------- the sheet ---------- */
 
 .canvas {
     position: fixed;
@@ -74,13 +127,13 @@ body {
     overflow: hidden;
     cursor: grab;
     touch-action: none;
-    background-color: var(--bg);
+    background-color: var(--bp-ground);
     background-image:
-        linear-gradient(var(--grid-line-major) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-line-major) 1px, transparent 1px),
-        linear-gradient(var(--grid-line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    /* --zoom is set by js/canvas.js so the grid scales with the cards */
+        linear-gradient(var(--bp-ink-20) 1px, transparent 1px),
+        linear-gradient(90deg, var(--bp-ink-20) 1px, transparent 1px),
+        linear-gradient(var(--bp-ink-09) 1px, transparent 1px),
+        linear-gradient(90deg, var(--bp-ink-09) 1px, transparent 1px);
+    /* --zoom is set by js/canvas.js so the grid scales with the drawing */
     background-size:
         calc(var(--grid-major) * var(--zoom, 1)) calc(var(--grid-major) * var(--zoom, 1)),
         calc(var(--grid-major) * var(--zoom, 1)) calc(var(--grid-major) * var(--zoom, 1)),
@@ -89,305 +142,144 @@ body {
     background-position: -1px -1px;
 }
 
-.canvas.is-dragging {
-    cursor: grabbing;
-    user-select: none;
-}
+.canvas.is-dragging { cursor: grabbing; user-select: none; }
 
 .board {
+    position: relative;
     transform-origin: 0 0;
     will-change: transform;
 }
 
-.zoom {
-    display: flex;
-    gap: var(--space-1);
+.container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
 }
 
-/* the phone-only lock (see the phone section); shows the state it is in */
-.lock {
-    display: none;
-}
-
-.lock .lock-closed,
-.lock.is-locked .lock-open {
-    display: none;
-}
-
-.lock.is-locked .lock-closed {
-    display: block;
-}
-
-/* header controls share one 32px height so they line up */
-.site-header .header-actions {
-    gap: var(--space-3);
-}
-
-#theme {
-    width: 32px;
-    height: 32px;
-    margin-right: -7px;  /* the icon, not its hover box, lines up with the page edge */
-}
-
-#theme svg {
-    width: 18px;
-    height: 18px;
-}
-
-/* HR / EN, a small segmented control (see .segmented in base.css);
-   one pill slides under the chosen language */
-.lang {
-    position: relative;
-    height: 32px;
-    padding: 3px;
-    gap: 2px;
-}
-
-.lang::before {
-    content: "";
-    position: absolute;
-    top: 3px;
-    bottom: 3px;
-    left: 3px;
-    width: calc((100% - 8px) / 2);
-    border-radius: calc(var(--radius) - 3px);
-    background: var(--fg);
-    transition: transform .25s var(--ease);
-}
-
-.lang:has(input[value="en"]:checked)::before {
-    transform: translateX(calc(100% + 2px));
-}
-
-.lang label {
-    z-index: 1;
-    display: grid;
-    place-items: center;
-    min-width: 36px;
-    padding: 0 var(--space-2);
-    font-size: var(--text-xs);
-}
-
-.lang label:has(input:checked) {
-    background: transparent;
-}
-
-/* ---------- project sheets ---------- */
+/* ---------- projects ---------- */
 
 #projects {
     padding-top: var(--board-top);
-    padding-bottom: calc(var(--space-9) * 2);  /* clear of the fixed footer */
-    scroll-margin-top: var(--space-4);
+    padding-bottom: 192px;
 }
 
 .section-head {
-    margin-bottom: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 40px;
+    padding-bottom: 12px;
+    border-bottom: var(--bp-stroke) solid var(--bp-ink);
+    animation: enter var(--bp-speed) var(--bp-ease) backwards;
 }
 
 .project-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-8);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px;
 }
 
-/* solid card; four corner marks frame it, and on hover they grow along
-   the edges until they meet and draw the full border */
 .project {
-    --tick-color: var(--fg);
-
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto 1fr auto;
-    grid-template-areas:
-        "name arrow"
-        "desc desc"
-        "version version";
-    gap: var(--space-4);
-    min-height: calc(var(--grid-major) * 3);
-    padding: var(--space-5);
-    line-height: var(--line-height);
-    background:
-        linear-gradient(var(--tick-color), var(--tick-color)) top left,
-        linear-gradient(var(--tick-color), var(--tick-color)) top left,
-        linear-gradient(var(--tick-color), var(--tick-color)) top right,
-        linear-gradient(var(--tick-color), var(--tick-color)) top right,
-        linear-gradient(var(--tick-color), var(--tick-color)) bottom left,
-        linear-gradient(var(--tick-color), var(--tick-color)) bottom left,
-        linear-gradient(var(--tick-color), var(--tick-color)) bottom right,
-        linear-gradient(var(--tick-color), var(--tick-color)) bottom right;
-    /* each corner is two lines: one along the top or bottom, one along the side */
-    --h: var(--tick) var(--tick-width);
-    --v: var(--tick-width) var(--tick);
-    background-size: var(--h), var(--v), var(--h), var(--v), var(--h), var(--v), var(--h), var(--v);
-    background-repeat: no-repeat;
-    background-color: var(--card-bg);
+    text-decoration: none;
     -webkit-user-drag: none;
-    transition: background-size .45s var(--ease), transform var(--duration-press) var(--ease);
-    animation: enter var(--duration-enter) var(--ease) backwards;
+    transition: transform var(--bp-speed-fast) var(--bp-ease), background var(--bp-speed-fast) linear;
+    animation: enter var(--bp-speed) var(--bp-ease) backwards;
 }
-
-/* pressing a card gives a little, but not while the sheet is being dragged */
-a.project:active {
-    transform: scale(.985);
-}
-
-.canvas.is-dragging .project {
-    transform: none;
-}
+.project h4 { font-size: var(--bp-display-sm); font-weight: 400; line-height: 1.2; }
+.project:hover { text-decoration: none; }
+a.project:hover { background: var(--bp-ink-09); }
+a.project:active { transform: scale(.985); }
+.canvas.is-dragging .project { transform: none; }
+.project .bp-card__footer { justify-content: space-between; }
+.project-arrow { color: var(--bp-ink-78); transition: transform var(--bp-speed-fast) var(--bp-ease); }
+a.project:hover .project-arrow { transform: translateX(3px); }
+.project.is-quiet { border-color: var(--bp-ink-62); color: var(--bp-ink-78); }
+.project.is-quiet .bp-card__title { border-bottom-color: var(--bp-ink-62); }
 
 /* the heading and cards drift in one after another on load */
 @keyframes enter {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-        filter: blur(4px);
-    }
+    from { opacity: 0; transform: translateY(6px); }
 }
-
-.section-head { animation: enter var(--duration-enter) var(--ease) backwards; }
 .project:nth-child(1) { animation-delay: 60ms; }
 .project:nth-child(2) { animation-delay: 120ms; }
 .project:nth-child(3) { animation-delay: 180ms; }
+.project:nth-child(4) { animation-delay: 240ms; }
 
-/* hover effects only where there is a real pointer, so taps don't leave them stuck */
-@media (hover: hover) and (pointer: fine) {
-    a.project:hover {
-        --h: calc(50% + 1px) var(--tick-width);
-        --v: var(--tick-width) calc(50% + 1px);
-    }
+/* ---------- everything else on the sheet ---------- */
 
-    a.project:hover .project-arrow {
-        color: var(--fg);
-        transform: translateX(3px);
-    }
+.exhibits { position: absolute; left: 50%; top: var(--board-top); width: 0; height: 0; }
+
+.exhibit {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: max-content;
+    max-width: 90vw;
 }
 
-a.project:focus-visible {
-    outline: 2px solid var(--fg);
-    outline-offset: 4px;
+.caption {
+    display: block;
+    margin-bottom: 14px;
+    font-size: var(--bp-label-sm);
+    font-weight: 500;
+    letter-spacing: var(--bp-track);
+    text-transform: uppercase;
+    color: var(--bp-ink-78);
 }
 
-.project h4 {
-    grid-area: name;
-    font-size: var(--text-xl);
-    line-height: 1.15;
-}
+.note { width: max-content; padding: 8px 12px; border: var(--bp-stroke) solid var(--bp-ink-62); }
 
-.project p {
-    grid-area: desc;
-    color: var(--accent);
-    text-wrap: pretty;  /* no lone last word */
+/* the sheet's own edge, with its size dimensioned */
+.sheet-edge {
+    position: absolute;
+    left: -2100px; top: -1200px;
+    width: 4200px; height: 3000px;
+    border: 3px solid var(--bp-ink);                /* heavy, so the edge still reads zoomed far out */
+    pointer-events: none;
 }
+.sheet-width  { position: absolute; left: -2100px; top: -1236px; }
+.sheet-height { position: absolute; left: -2136px; top: -1200px; }
 
-.project-arrow {
-    grid-area: arrow;
-    align-self: center;
-    color: var(--accent);
-    transition: color var(--duration) var(--ease), transform var(--duration) var(--ease);
-}
-
-/* a project that isn't available yet: not a link, dimmed */
-.project.is-quiet h4 {
-    color: var(--accent);
-}
-
-/* version tag, like a git tag */
-.version {
-    grid-area: version;
-    justify-self: start;
-    padding: var(--space-1) var(--space-2);
-    border: var(--border-width) solid var(--border);
-    border-radius: var(--radius-sm);
-    font-size: var(--text-xs);
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-}
+.title-block table { min-width: 560px; }
+.title-block th { width: 1%; white-space: nowrap; }
 
 /* ---------- tablet ---------- */
 
 @media (max-width: 1100px) {
-    .project-list {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--space-7);
-    }
+    .project-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 }
 
-/* ---------- mobile ---------- */
+/* ---------- phone ---------- */
 
 @media (max-width: 720px) {
-    /* phones: the heading and the three cards fill one screen. The sheet
-       still roams (drag, pinch) until the lock button is pressed; locked, it
-       eases back and the page only scrolls, if the screen is too short */
+    /* phones: the heading and the cards fill one screen. The sheet still roams
+       (drag, pinch) until the lock button is pressed: locked, it eases back and
+       the page only scrolls, if the screen is too short */
     .canvas.is-locked {
         overflow-y: auto;
         background-attachment: local;
         cursor: auto;
         touch-action: auto;
     }
+    .canvas.is-settling { transition: background-position .5s var(--bp-ease), background-size .5s var(--bp-ease); }
+    .canvas.is-settling .board { transition: transform .5s var(--bp-ease); }
+    .canvas.is-locked .exhibits { display: none; }
 
-    /* the ease back when locking */
-    .canvas.is-settling {
-        transition: background-position .5s var(--ease), background-size .5s var(--ease);
-    }
-
-    .canvas.is-settling .board {
-        transition: transform .5s var(--ease);
-    }
-
-    .lock {
-        display: inline-flex;
-    }
+    .lock { display: inline-flex; }
+    .zoom, .theme-field > .bp-label--sm { display: none; }
+    .header-actions { gap: 10px; }
 
     #projects {
         display: flex;
         flex-direction: column;
         min-height: 100svh;
-        padding-top: calc(var(--header-height) + var(--space-2));
-        padding-bottom: var(--footer-space, 120px);
+        padding-top: calc(var(--header-height) + 8px);
+        padding-bottom: 96px;
     }
-
-    .section-head {
-        margin-bottom: var(--space-5);
-    }
-
-    .project-list {
-        flex: 1;
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(3, 1fr);
-        gap: var(--space-4);
-    }
-
-    /* a card is never shorter than its content, so the tag always shows */
-    .project {
-        min-height: auto;
-        gap: var(--space-2);
-        padding: var(--space-4);
-    }
-
-    .project h4 {
-        font-size: var(--text-lg);
-    }
-
-    .project p {
-        font-size: var(--text-sm);
-    }
-
-    .zoom {
-        display: none;
-    }
-
-    /* a slimmer footer leaves the cards more room */
-    #projects {
-        --footer-space: 88px;
-    }
-
-    .site-footer {
-        padding-top: var(--space-5);
-        padding-bottom: var(--space-4);
-    }
-
-    .site-footer .footer-inner {
-        padding-top: var(--space-4);
-    }
+    .section-head { margin-bottom: 20px; }
+    .project-list { flex: 1; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    .project h4 { font-size: var(--bp-text); }
+    .site-footer { padding-top: 24px; padding-bottom: 12px; }
+    .site-footer .footer-inner { padding-top: 12px; }
 }

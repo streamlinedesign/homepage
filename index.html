@@ -14,34 +14,35 @@
         } catch { document.documentElement.dataset.theme = 'dark'; }
     </script>
 
-    <link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="css/site-font.css">
-    <link rel="stylesheet" href="css/tokens.css">
-    <link rel="stylesheet" href="css/base.css">
+    <!-- the page is drawn with Blueprint Paper, Streamline's own UI kit: github.com/streamlinedesign/blueprint-paper -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/streamlinedesign/blueprint-paper@main/dist/blueprint-paper.min.css">
     <link rel="stylesheet" href="css/suite.css">
 </head>
 
-<body>
+<body class="bp-sheet bp-sheet--plain">
 
-    <header class="site-header container">
-        <a class="brand" href="index.html">Streamline</a>
+    <header class="site-header">
+        <a class="brand" href="index.html" data-recenter><span class="bp-label--sm bp-dim">Sheet 1</span><span class="brand-word">Streamline</span></a>
         <div class="header-actions">
-            <div class="segmented lang" role="radiogroup" aria-label="Jezik" data-i18n-aria-label="language">
+            <div class="lang" role="radiogroup" aria-label="Jezik" data-i18n-aria-label="language">
                 <label>HR<input type="radio" name="lang" value="hr" checked></label>
                 <label>EN<input type="radio" name="lang" value="en"></label>
             </div>
-            <div class="zoom" role="group" aria-label="Zumiranje" data-i18n-aria-label="zoom">
-                <button class="btn btn-ghost btn-sm btn-icon" type="button" data-zoom="out" aria-label="Umanji" data-i18n-aria-label="zoomOut"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2.5 7.5h10" stroke="currentColor"/></svg></button>
-                <button class="btn btn-ghost btn-sm btn-icon" type="button" data-zoom="in" aria-label="Uvećaj" data-i18n-aria-label="zoomIn"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2.5 7.5h10M7.5 2.5v10" stroke="currentColor"/></svg></button>
+            <div class="zoom bp-btn-group" role="group" aria-label="Zumiranje" data-i18n-aria-label="zoom">
+                <button class="bp-btn bp-btn--sm bp-btn--icon" type="button" data-zoom="out" aria-label="Umanji" data-i18n-aria-label="zoomOut"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2.5 7.5h10" stroke="currentColor"/></svg></button>
+                <button class="bp-btn bp-btn--sm bp-btn--icon" type="button" data-zoom="in" aria-label="Uvećaj" data-i18n-aria-label="zoomIn"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2.5 7.5h10M7.5 2.5v10" stroke="currentColor"/></svg></button>
             </div>
-            <button class="btn btn-ghost btn-sm btn-icon lock" type="button" data-lock aria-pressed="false" aria-label="Zaključaj prikaz" data-i18n-aria-label="lock">
-                <svg class="lock-open" width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><rect x="3" y="7" width="9" height="6" rx="1" stroke="currentColor"/><path d="M5 7V4.5a2.5 2.5 0 0 1 4.9-.7" stroke="currentColor" stroke-linecap="round"/></svg>
-                <svg class="lock-closed" width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><rect x="3" y="7" width="9" height="6" rx="1" stroke="currentColor"/><path d="M5 7V4.5a2.5 2.5 0 0 1 5 0V7" stroke="currentColor"/></svg>
+            <button class="bp-btn bp-btn--sm bp-btn--icon lock" type="button" data-lock aria-pressed="false" aria-label="Zaključaj prikaz" data-i18n-aria-label="lock">
+                <svg class="lock-open" width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><rect x="3" y="7" width="9" height="6" stroke="currentColor"/><path d="M5 7V4.5a2.5 2.5 0 0 1 4.9-.7" stroke="currentColor" stroke-linecap="round"/></svg>
+                <svg class="lock-closed" width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><rect x="3" y="7" width="9" height="6" stroke="currentColor"/><path d="M5 7V4.5a2.5 2.5 0 0 1 5 0V7" stroke="currentColor"/></svg>
             </button>
-            <button id="theme" class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Promijeni temu" data-i18n-aria-label="theme">
-                <svg class="sun" width="24" height="24" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 0C7.77614 0 8 0.223858 8 0.5V2.5C8 2.77614 7.77614 3 7.5 3C7.22386 3 7 2.77614 7 2.5V0.5C7 0.223858 7.22386 0 7.5 0ZM2.1967 2.1967C2.39196 2.00144 2.70854 2.00144 2.90381 2.1967L4.31802 3.61091C4.51328 3.80617 4.51328 4.12276 4.31802 4.31802C4.12276 4.51328 3.80617 4.51328 3.61091 4.31802L2.1967 2.90381C2.00144 2.70854 2.00144 2.39196 2.1967 2.1967ZM0.5 7C0.223858 7 0 7.22386 0 7.5C0 7.77614 0.223858 8 0.5 8H2.5C2.77614 8 3 7.77614 3 7.5C3 7.22386 2.77614 7 2.5 7H0.5ZM2.1967 12.8033C2.00144 12.608 2.00144 12.2915 2.1967 12.0962L3.61091 10.682C3.80617 10.4867 4.12276 10.4867 4.31802 10.682C4.51328 10.8772 4.51328 11.1938 4.31802 11.3891L2.90381 12.8033C2.70854 12.9986 2.39196 12.9986 2.1967 12.8033ZM12.5 7C12.2239 7 12 7.22386 12 7.5C12 7.77614 12.2239 8 12.5 8H14.5C14.7761 8 15 7.77614 15 7.5C15 7.22386 14.7761 7 14.5 7H12.5ZM10.682 4.31802C10.4867 4.12276 10.4867 3.80617 10.682 3.61091L12.0962 2.1967C12.2915 2.00144 12.608 2.00144 12.8033 2.1967C12.9986 2.39196 12.9986 2.70854 12.8033 2.90381L11.3891 4.31802C11.1938 4.51328 10.8772 4.51328 10.682 4.31802ZM8 12.5C8 12.2239 7.77614 12 7.5 12C7.22386 12 7 12.2239 7 12.5V14.5C7 14.7761 7.22386 15 7.5 15C7.77614 15 8 14.7761 8 14.5V12.5ZM10.682 10.682C10.8772 10.4867 11.1938 10.4867 11.3891 10.682L12.8033 12.0962C12.9986 12.2915 12.9986 12.608 12.8033 12.8033C12.608 12.9986 12.2915 12.9986 12.0962 12.8033L10.682 11.3891C10.4867 11.1938 10.4867 10.8772 10.682 10.682ZM5.5 7.5C5.5 6.39543 6.39543 5.5 7.5 5.5C8.60457 5.5 9.5 6.39543 9.5 7.5C9.5 8.60457 8.60457 9.5 7.5 9.5C6.39543 9.5 5.5 8.60457 5.5 7.5ZM7.5 4.5C5.84315 4.5 4.5 5.84315 4.5 7.5C4.5 9.15685 5.84315 10.5 7.5 10.5C9.15685 10.5 10.5 9.15685 10.5 7.5C10.5 5.84315 9.15685 4.5 7.5 4.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-            <svg class="moon" width="24" height="24" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.89998 0.499976C2.89998 0.279062 2.72089 0.0999756 2.49998 0.0999756C2.27906 0.0999756 2.09998 0.279062 2.09998 0.499976V1.09998H1.49998C1.27906 1.09998 1.09998 1.27906 1.09998 1.49998C1.09998 1.72089 1.27906 1.89998 1.49998 1.89998H2.09998V2.49998C2.09998 2.72089 2.27906 2.89998 2.49998 2.89998C2.72089 2.89998 2.89998 2.72089 2.89998 2.49998V1.89998H3.49998C3.72089 1.89998 3.89998 1.72089 3.89998 1.49998C3.89998 1.27906 3.72089 1.09998 3.49998 1.09998H2.89998V0.499976ZM5.89998 3.49998C5.89998 3.27906 5.72089 3.09998 5.49998 3.09998C5.27906 3.09998 5.09998 3.27906 5.09998 3.49998V4.09998H4.49998C4.27906 4.09998 4.09998 4.27906 4.09998 4.49998C4.09998 4.72089 4.27906 4.89998 4.49998 4.89998H5.09998V5.49998C5.09998 5.72089 5.27906 5.89998 5.49998 5.89998C5.72089 5.89998 5.89998 5.72089 5.89998 5.49998V4.89998H6.49998C6.72089 4.89998 6.89998 4.72089 6.89998 4.49998C6.89998 4.27906 6.72089 4.09998 6.49998 4.09998H5.89998V3.49998ZM1.89998 6.49998C1.89998 6.27906 1.72089 6.09998 1.49998 6.09998C1.27906 6.09998 1.09998 6.27906 1.09998 6.49998V7.09998H0.499976C0.279062 7.09998 0.0999756 7.27906 0.0999756 7.49998C0.0999756 7.72089 0.279062 7.89998 0.499976 7.89998H1.09998V8.49998C1.09998 8.72089 1.27906 8.89997 1.49998 8.89997C1.72089 8.89997 1.89998 8.72089 1.89998 8.49998V7.89998H2.49998C2.72089 7.89998 2.89998 7.72089 2.89998 7.49998C2.89998 7.27906 2.72089 7.09998 2.49998 7.09998H1.89998V6.49998ZM8.54406 0.98184L8.24618 0.941586C8.03275 0.917676 7.90692 1.1655 8.02936 1.34194C8.17013 1.54479 8.29981 1.75592 8.41754 1.97445C8.91878 2.90485 9.20322 3.96932 9.20322 5.10022C9.20322 8.37201 6.82247 11.0878 3.69887 11.6097C3.45736 11.65 3.20988 11.6772 2.96008 11.6906C2.74563 11.702 2.62729 11.9535 2.77721 12.1072C2.84551 12.1773 2.91535 12.2458 2.98667 12.3128L3.05883 12.3795L3.31883 12.6045L3.50684 12.7532L3.62796 12.8433L3.81491 12.9742L3.99079 13.089C4.11175 13.1651 4.23536 13.2375 4.36157 13.3059L4.62496 13.4412L4.88553 13.5607L5.18837 13.6828L5.43169 13.7686C5.56564 13.8128 5.70149 13.8529 5.83857 13.8885C5.94262 13.9155 6.04767 13.9401 6.15405 13.9622C6.27993 13.9883 6.40713 14.0109 6.53544 14.0298L6.85241 14.0685L7.11934 14.0892C7.24637 14.0965 7.37436 14.1002 7.50322 14.1002C11.1483 14.1002 14.1032 11.1453 14.1032 7.50023C14.1032 7.25044 14.0893 7.00389 14.0623 6.76131L14.0255 6.48407C13.991 6.26083 13.9453 6.04129 13.8891 5.82642C13.8213 5.56709 13.7382 5.31398 13.6409 5.06881L13.5279 4.80132L13.4507 4.63542L13.3766 4.48666C13.2178 4.17773 13.0353 3.88295 12.8312 3.60423L12.6782 3.40352L12.4793 3.16432L12.3157 2.98361L12.1961 2.85951L12.0355 2.70246L11.8134 2.50184L11.4925 2.24191L11.2483 2.06498L10.9562 1.87446L10.6346 1.68894L10.3073 1.52378L10.1938 1.47176L9.95488 1.3706L9.67791 1.2669L9.42566 1.1846L9.10075 1.09489L8.83599 1.03486L8.54406 0.98184ZM10.4032 5.30023C10.4032 4.27588 10.2002 3.29829 9.83244 2.40604C11.7623 3.28995 13.1032 5.23862 13.1032 7.50023C13.1032 10.593 10.596 13.1002 7.50322 13.1002C6.63646 13.1002 5.81597 12.9036 5.08355 12.5522C6.5419 12.0941 7.81081 11.2082 8.74322 10.0416C8.87963 10.2284 9.10028 10.3497 9.34928 10.3497C9.76349 10.3497 10.0993 10.0139 10.0993 9.59971C10.0993 9.24256 9.84965 8.94373 9.51535 8.86816C9.57741 8.75165 9.63653 8.63334 9.6926 8.51332C9.88358 8.63163 10.1088 8.69993 10.35 8.69993C11.0403 8.69993 11.6 8.14028 11.6 7.44993C11.6 6.75976 11.0406 6.20024 10.3505 6.19993C10.3853 5.90487 10.4032 5.60464 10.4032 5.30023Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-            </button>
+            <label class="bp-switch-field theme-field" title="Whiteprint">
+                <span class="bp-label--sm bp-dim" data-i18n="theme">Papir</span>
+                <span class="bp-switch bp-switch--thumb-4"><input type="checkbox" id="theme" role="switch" aria-label="Promijeni temu" data-i18n-aria-label="themeAria"><span class="bp-switch__track"></span></span>
+            </label>
         </div>
     </header>
 
@@ -51,49 +52,230 @@
 
         <section id="projects" class="container">
             <div class="section-head">
+                <span class="bp-label--sm bp-dim">Streamline · <span data-i18n="sheetOf">list</span> 1</span>
                 <h3 data-i18n="projects">Projekti</h3>
             </div>
 
-            <!-- versions: edit the text in .version -->
+            <!-- versions: edit the text in .version. Texts in both languages are in js/lang.js -->
             <div class="project-list">
-                <!-- texts in both languages are in js/lang.js -->
-                <a class="project" href="https://streamlinedesign.github.io/demo/">
-                    <h4>Izrada cjenika</h4>
-                    <p data-i18n="menuDesc">Digitalni i fizički paketi brendiranja za kafiće, restorane i&nbsp;klubove.</p>
-                    <span class="version">v1.0.0</span>
-                    <svg class="project-arrow" width="16" height="16" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M8.15 3.15a.5.5 0 0 1 .7 0l4 4a.5.5 0 0 1 0 .7l-4 4a.5.5 0 0 1-.7-.7L11.29 8H2.5a.5.5 0 0 1 0-1h8.79L8.15 3.85a.5.5 0 0 1 0-.7Z" fill="currentColor"/></svg>
+                <a class="project bp-card" href="https://streamlinedesign.github.io/demo/">
+                    <header class="bp-card__title"><div><span class="bp-label--sm bp-dim" data-i18n="project">Projekt</span><h4>Izrada cjenika</h4></div><div><span class="bp-label--sm bp-dim">Rev</span><span class="bp-label version">v1.0.0</span></div></header>
+                    <div class="bp-card__body"><p class="bp-text--sm" data-i18n="menuDesc">Digitalni i fizički paketi brendiranja za kafiće, restorane i&nbsp;klubove.</p></div>
+                    <footer class="bp-card__footer"><span class="bp-label--sm" data-i18n="open">Otvori</span><svg class="project-arrow" width="16" height="16" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M8.15 3.15a.5.5 0 0 1 .7 0l4 4a.5.5 0 0 1 0 .7l-4 4a.5.5 0 0 1-.7-.7L11.29 8H2.5a.5.5 0 0 1 0-1h8.79L8.15 3.85a.5.5 0 0 1 0-.7Z" fill="currentColor"/></svg></footer>
+                </a>
+
+                <a class="project bp-card" href="https://streamlinedesign.github.io/blueprint-paper/">
+                    <header class="bp-card__title"><div><span class="bp-label--sm bp-dim" data-i18n="project">Projekt</span><h4>Blueprint Paper</h4></div><div><span class="bp-label--sm bp-dim">Rev</span><span class="bp-label version">v0.9.0</span></div></header>
+                    <div class="bp-card__body"><p class="bp-text--sm" data-i18n="bpDesc">CSS komplet komponenti nacrtan kao tehnički crtež. Ova stranica je nacrtana njime.</p></div>
+                    <footer class="bp-card__footer"><span class="bp-label--sm" data-i18n="open">Otvori</span><svg class="project-arrow" width="16" height="16" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M8.15 3.15a.5.5 0 0 1 .7 0l4 4a.5.5 0 0 1 0 .7l-4 4a.5.5 0 0 1-.7-.7L11.29 8H2.5a.5.5 0 0 1 0-1h8.79L8.15 3.85a.5.5 0 0 1 0-.7Z" fill="currentColor"/></svg></footer>
                 </a>
 
                 <!-- not available yet: a div instead of a link; make it an <a> with an href when it launches -->
-                <div class="project is-quiet">
-                    <h4>Digitalni dnevni tisak</h4>
-                    <p data-i18n="pressDesc">Dnevni agregat novosti i&nbsp;igrice.</p>
-                    <span class="version">v0.1.0</span>
+                <div class="project bp-card is-quiet">
+                    <header class="bp-card__title"><div><span class="bp-label--sm bp-dim" data-i18n="draft">Skica</span><h4>Digitalni dnevni tisak</h4></div><div><span class="bp-label--sm bp-dim">Rev</span><span class="bp-label version">v0.1.0</span></div></header>
+                    <div class="bp-card__body"><p class="bp-text--sm" data-i18n="pressDesc">Dnevni agregat novosti i&nbsp;igrice.</p></div>
                 </div>
 
-                <!-- no page yet: a div instead of a link -->
-                <div class="project is-quiet">
-                    <h4>Šah u magli rata</h4>
-                    <span class="version">v0.1.0</span>
+                <div class="project bp-card is-quiet">
+                    <header class="bp-card__title"><div><span class="bp-label--sm bp-dim" data-i18n="draft">Skica</span><h4>Šah u magli rata</h4></div><div><span class="bp-label--sm bp-dim">Rev</span><span class="bp-label version">v0.1.0</span></div></header>
+                    <div class="bp-card__body"><span class="bp-skeleton bp-skeleton--line" style="width:70%"></span><span class="bp-skeleton bp-skeleton--line bp-skeleton--sm" style="width:45%"></span></div>
                 </div>
             </div>
         </section>
 
+        <!-- ================= the rest of the sheet =================
+             Everything below sits at a fixed spot on the drawing: --x from the centre line,
+             --y from the top of the projects. Drag or use the arrows to get there. Phones see it
+             while unlocked. Captions are drawing notes, so they stay in English. -->
+        <div class="exhibits">
+
+            <div class="sheet-edge" aria-hidden="true"></div>
+            <span class="bp-measure sheet-width" style="--len: 4200px" data-label="4200 px · sheet width" aria-hidden="true"></span>
+            <span class="bp-measure bp-measure--vertical sheet-height" style="--len: 3000px" data-label="3000 px" aria-hidden="true"></span>
+
+            <!-- bottom-right corner of the sheet: the title block -->
+            <section class="exhibit title-block" style="--x: 1440px; --y: 1540px">
+                <table class="bp-table bp-table--heavy">
+                    <tbody>
+                        <tr><th>Drawn</th><td>Streamline</td><th>Sheet</th><td>1 of 1</td></tr>
+                        <tr><th>Title</th><td colspan="3">Suite overview, open plan, all directions</td></tr>
+                        <tr><th>Scale</th><td>1:1 at zoom 100%</td><th>Rev</th><td>A</td></tr>
+                        <tr><th>Kit</th><td colspan="3">Blueprint Paper v0.9.0 · github.com/streamlinedesign/blueprint-paper</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- north -->
+            <section class="exhibit" style="--x: -620px; --y: -720px; width: 760px">
+                <span class="caption">Typography · IBM Plex Mono</span>
+                <p class="bp-display bp-display--xl">Interfaces drawn like technical drawings.</p>
+                <p class="bp-text bp-dim" style="max-width: 48ch; margin-top: 16px">Navy paper, pale ink, one monospace face. State lives in the line work: hollow is off, filled is on.</p>
+            </section>
+
+            <section class="exhibit" style="--x: 260px; --y: -640px; width: 360px">
+                <span class="caption">How to move around this sheet</span>
+                <div class="bp-list bp-list--light">
+                    <div class="bp-list__row"><span class="bp-text--sm">Pan</span><kbd class="bp-kbd bp-kbd--sm"><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd></kbd></div>
+                    <div class="bp-list__row"><span class="bp-text--sm">Zoom</span><kbd class="bp-kbd bp-kbd--sm"><kbd>−</kbd><kbd>+</kbd></kbd></div>
+                    <div class="bp-list__row"><span class="bp-text--sm">Back to the start</span><kbd class="bp-kbd bp-kbd--sm"><kbd>Home</kbd></kbd></div>
+                    <div class="bp-list__row"><span class="bp-text--sm">Or drag, scroll, pinch</span><span class="bp-badge bp-badge--dim">Mouse · touch</span></div>
+                </div>
+            </section>
+
+            <!-- north-east: the switch -->
+            <section class="exhibit" style="--x: 820px; --y: -560px; width: 420px">
+                <span class="caption">Switch · the component the kit started from</span>
+                <div class="bp-row bp-wrap" style="gap: 28px; align-items: center">
+                    <div data-measure="w" data-side="bottom"><label class="bp-switch bp-switch--lg"><input type="checkbox" role="switch" aria-label="Large switch" checked><span class="bp-switch__track"></span></label></div>
+                    <div data-measure="h" data-side="right" style="margin-right: 28px"><label class="bp-switch bp-switch--lg bp-switch--vertical"><input type="checkbox" role="switch" aria-label="Large vertical switch"><span class="bp-switch__track"></span></label></div>
+                    <label class="bp-switch"><input type="checkbox" role="switch" aria-label="Switch" checked><span class="bp-switch__track"></span></label>
+                    <label class="bp-switch bp-switch--vertical"><input type="checkbox" role="switch" aria-label="Vertical switch" checked><span class="bp-switch__track"></span></label>
+                    <label class="bp-switch bp-switch--thumb-2"><input type="checkbox" role="switch" aria-label="Thin thumb"><span class="bp-switch__track"></span></label>
+                    <label class="bp-switch bp-switch--thumb-16"><input type="checkbox" role="switch" aria-label="Wide thumb" checked><span class="bp-switch__track"></span></label>
+                    <label class="bp-switch bp-switch--light"><input type="checkbox" role="switch" aria-label="Light track"><span class="bp-switch__track"></span></label>
+                </div>
+                <p class="bp-text--sm bp-dim" style="margin-top: 28px">Hollow is off, filled is on. Up is on. The thumb stretches through the slide; a keyboard flip is instant.</p>
+            </section>
+
+            <!-- east -->
+            <section class="exhibit" style="--x: 1000px; --y: 40px">
+                <span class="caption">Measure · px by default, mm and cm at 96 dpi</span>
+                <div style="padding: 36px 0 36px 56px">
+                    <div data-measure="w h" data-unit="mm"><div class="bp-card bp-card--heavy" style="width: 220px; height: 120px"><div class="bp-card__body"><span class="bp-label--sm bp-dim">Plate</span><span class="bp-label">Millimetres</span></div></div></div>
+                </div>
+            </section>
+
+            <section class="exhibit" style="--x: 1000px; --y: 330px; width: 460px">
+                <span class="caption">Table · parts list</span>
+                <div class="bp-table-wrap" tabindex="0">
+                    <table class="bp-table">
+                        <thead><tr><th>No.</th><th>Part</th><th>Material</th><th class="bp-num">Qty</th></tr></thead>
+                        <tbody>
+                            <tr><td>1</td><td>Pump, centrifugal</td><td>Cast iron</td><td class="bp-num">2</td></tr>
+                            <tr><td>2</td><td>Flange, DN100</td><td>S235</td><td class="bp-num">8</td></tr>
+                            <tr><td>3</td><td>Gasket, DN100</td><td>EPDM</td><td class="bp-num">8</td></tr>
+                            <tr><td>4</td><td>Base frame</td><td>S355</td><td class="bp-num">1</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- south-east: form -->
+            <section class="exhibit" style="--x: 1000px; --y: 720px; width: 400px">
+                <span class="caption">Field · input, select, unit, choices</span>
+                <div class="bp-stack" style="gap: 16px">
+                    <div class="bp-field"><label class="bp-field__label" for="x-title">Drawing title</label><input class="bp-input" id="x-title" placeholder="Pump house, level 1"><p class="bp-field__hint">Shown in the title block.</p></div>
+                    <div class="bp-row" style="gap: 16px">
+                        <div class="bp-field bp-grow"><label class="bp-field__label" for="x-scale">Scale</label><select class="bp-select" id="x-scale"><option>1 : 50</option><option selected>1 : 100</option><option>1 : 200</option></select></div>
+                        <div class="bp-field"><label class="bp-field__label" for="x-w">Width</label><div class="bp-input-group"><span class="bp-input-group__addon">mm</span><input class="bp-input" id="x-w" value="2400" style="width: 7ch"></div></div>
+                    </div>
+                    <div class="bp-choice-group bp-choice-group--row">
+                        <label class="bp-choice"><input type="checkbox" class="bp-checkbox" checked> Issued</label>
+                        <label class="bp-choice"><input type="radio" class="bp-radio" name="x-r" checked> A3</label>
+                        <label class="bp-choice"><input type="radio" class="bp-radio" name="x-r"> A1</label>
+                    </div>
+                    <div class="bp-row" style="gap: 8px"><button class="bp-btn bp-btn--sm bp-btn--ghost" type="button">Revert</button><button class="bp-btn bp-btn--sm bp-btn--solid" type="button">Issue</button></div>
+                </div>
+            </section>
+
+            <!-- south -->
+            <section class="exhibit" style="--x: -140px; --y: 960px; width: 380px">
+                <span class="caption">Progress · solid, hatched, working</span>
+                <div class="bp-stack" style="gap: 16px">
+                    <div><div class="bp-readout"><span class="bp-label--sm">Upload</span><span class="bp-label--sm bp-num">40%</span></div><div class="bp-progress" role="progressbar" aria-label="Upload" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="--value: 40%"><span class="bp-progress__bar"></span></div></div>
+                    <div class="bp-progress bp-progress--hatched" role="progressbar" aria-label="Hatched" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" style="--value: 65%"><span class="bp-progress__bar"></span></div>
+                    <div class="bp-progress bp-progress--indeterminate" role="progressbar" aria-label="Working"><span class="bp-progress__bar"></span></div>
+                </div>
+            </section>
+
+            <section class="exhibit" style="--x: 320px; --y: 960px">
+                <span class="caption">Pagination · breadcrumb</span>
+                <div class="bp-stack" style="gap: 20px">
+                    <nav class="bp-pagination" aria-label="Pages">
+                        <button class="bp-pagination__item" type="button" aria-label="Previous page">‹</button>
+                        <button class="bp-pagination__item" type="button" aria-current="page">1</button>
+                        <button class="bp-pagination__item" type="button">2</button>
+                        <button class="bp-pagination__item" type="button">3</button>
+                        <span class="bp-pagination__gap">…</span>
+                        <button class="bp-pagination__item" type="button">12</button>
+                        <button class="bp-pagination__item" type="button" aria-label="Next page">›</button>
+                    </nav>
+                    <nav class="bp-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="#">Streamline</a></li><li><a href="#">Sheet 1</a></li><li><a href="#" aria-current="page">South</a></li></ol></nav>
+                </div>
+            </section>
+
+            <section class="exhibit" style="--x: -760px; --y: 960px; width: 560px">
+                <span class="caption">Code · line numbers and copy</span>
+                <pre data-code><code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/streamlinedesign/blueprint-paper@main/dist/blueprint-paper.min.css"&gt;
+&lt;body class="bp-sheet"&gt;
+  &lt;label class="bp-switch"&gt;
+    &lt;input type="checkbox" role="switch"&gt;
+    &lt;span class="bp-switch__track"&gt;&lt;/span&gt;
+  &lt;/label&gt;</code></pre>
+            </section>
+
+            <!-- south-west -->
+            <section class="exhibit" style="--x: -1200px; --y: 560px; width: 380px">
+                <span class="caption">Alert · badge · stamp · toast</span>
+                <div class="bp-stack" style="gap: 16px">
+                    <div class="bp-alert" role="status"><span class="bp-alert__title">Rev B2 issued</span><p class="bp-alert__text">Flange rating corrected to PN16. Sheets 3 and 7 affected.</p></div>
+                    <div class="bp-row bp-wrap" style="gap: 10px; align-items: center"><span class="bp-badge">Draft</span><span class="bp-badge bp-badge--solid">Issued</span><span class="bp-badge bp-badge--dim">Archived</span><span class="bp-stamp">Approved</span></div>
+                    <div class="bp-row" style="gap: 8px"><button class="bp-btn bp-btn--sm" type="button" data-toast>Show a toast</button><button class="bp-btn bp-btn--sm bp-btn--ghost" type="button" data-toast-solid>Solid</button></div>
+                </div>
+            </section>
+
+            <!-- west -->
+            <section class="exhibit" style="--x: -1240px; --y: 60px; width: 380px">
+                <span class="caption">Tabs · accordion · no script</span>
+                <div class="bp-tabset">
+                    <input type="radio" name="x-ts" id="x-ts1" checked><label class="bp-tab" for="x-ts1">Power</label>
+                    <input type="radio" name="x-ts" id="x-ts2"><label class="bp-tab" for="x-ts2">Network</label>
+                    <input type="radio" name="x-ts" id="x-ts3"><label class="bp-tab" for="x-ts3">Log</label>
+                    <div class="bp-tabset__panels">
+                        <section class="bp-tabpanel bp-tabpanel--boxed"><span class="bp-label">Power</span><p class="bp-text--sm bp-dim">Main bus 230 V · 3 circuits · all closed.</p></section>
+                        <section class="bp-tabpanel bp-tabpanel--boxed"><span class="bp-label">Network</span><p class="bp-text--sm bp-dim">2 links up · 1 planned.</p></section>
+                        <section class="bp-tabpanel bp-tabpanel--boxed"><span class="bp-label">Log</span><p class="bp-text--sm bp-dim">Last change 22:08 · Pump B stopped.</p></section>
+                    </div>
+                </div>
+                <div class="bp-accordion" style="margin-top: 20px">
+                    <details class="bp-accordion__item" name="x-acc" open><summary class="bp-accordion__summary">General notes</summary><div class="bp-accordion__body"><p class="bp-text--sm">All dimensions in CSS pixels unless noted. Do not scale from this drawing.</p></div></details>
+                    <details class="bp-accordion__item" name="x-acc"><summary class="bp-accordion__summary">Materials</summary><div class="bp-accordion__body"><p class="bp-text--sm">HTML, CSS and 3 kB of optional script.</p></div></details>
+                </div>
+            </section>
+
+            <!-- north-west: buttons -->
+            <section class="exhibit" style="--x: -1240px; --y: -420px; width: 380px">
+                <span class="caption">Button · outline, solid, ghost, group</span>
+                <div class="bp-stack" style="gap: 14px">
+                    <div class="bp-row bp-wrap" style="gap: 10px"><button class="bp-btn" type="button">Outline</button><button class="bp-btn bp-btn--solid" type="button">Solid</button><button class="bp-btn bp-btn--ghost" type="button">Ghost</button></div>
+                    <div class="bp-btn-group"><button class="bp-btn bp-btn--sm" type="button">Day</button><button class="bp-btn bp-btn--sm bp-btn--solid" type="button">Week</button><button class="bp-btn bp-btn--sm" type="button">Month</button></div>
+                    <button class="bp-btn bp-btn--block bp-tooltip" type="button" data-tooltip="Tooltips are pure CSS">Hover me</button>
+                </div>
+            </section>
+
+            <!-- far corners: notes for the explorer -->
+            <section class="exhibit note" style="--x: -2040px; --y: -1150px"><span class="bp-label--sm bp-dim">North-west corner · nothing is drawn here yet</span></section>
+            <section class="exhibit note" style="--x: 1700px; --y: -1150px"><span class="bp-label--sm bp-dim">North-east corner · space reserved</span></section>
+            <section class="exhibit note" style="--x: -2040px; --y: 1700px"><span class="bp-label--sm bp-dim">South-west corner · space reserved</span></section>
+        </div>
+
         </div>
     </main>
 
-    <footer class="site-footer container">
+    <footer class="site-footer">
         <div class="footer-inner">
-            <p class="footer-copy">© <span id="year"></span> <span class="brand-word">Streamline</span></p>
+            <p class="footer-copy bp-label--sm">© <span id="year"></span> <span class="brand-word">Streamline</span></p>
             <nav>
-                <a href="mailto:streamline.design.github@gmail.com" data-i18n="contact">Kontakt</a>
+                <a class="bp-label--sm" href="mailto:streamline.design.github@gmail.com" data-i18n="contact">Kontakt</a>
             </nav>
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/gh/streamlinedesign/blueprint-paper@main/dist/blueprint-paper.js" defer></script>
     <script src="js/theme.js"></script>
     <script src="js/canvas.js"></script>
     <script src="js/lang.js"></script>
+    <script src="js/board.js" defer></script>
     <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 
