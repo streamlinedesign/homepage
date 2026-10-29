@@ -16,12 +16,8 @@
 
 /* the kit's dark paper is the default; the "light" theme is its whiteprint */
 :root[data-theme="light"] {
-    --bp-ground: #F3F6FB;
-    --bp-ink: #0B2F6E;
-    --bp-ink-78: rgba(11, 47, 110, .78);
-    --bp-ink-62: rgba(11, 47, 110, .62);
-    --bp-ink-20: rgba(11, 47, 110, .16);
-    --bp-ink-09: rgba(11, 47, 110, .09);
+    --bp-paper: #F3F6FB;
+    --bp-pen: #0B2F6E;
     --bp-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%230B2F6E' stroke-width='1.25'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
     color-scheme: light;
 }
@@ -68,7 +64,7 @@ svg { display: block; }
     justify-content: space-between;
     gap: 16px;
     padding-top: 16px;
-    border-top: var(--bp-stroke) solid var(--bp-ink-62);
+    border-top: var(--bp-line) solid var(--bp-ink-62);
 }
 
 .site-header a,
@@ -100,16 +96,16 @@ svg { display: block; }
 .lang label {
     display: inline-flex; align-items: center; justify-content: center;
     min-width: 36px; height: var(--bp-control-sm); padding: 0 8px;
-    border: var(--bp-stroke) solid var(--bp-ink);
+    border: var(--bp-line) solid var(--bp-ink);
     font-size: var(--bp-label-sm); font-weight: 500; letter-spacing: var(--bp-track); text-transform: uppercase;
     cursor: pointer;
-    transition: background var(--bp-speed-fast) linear, color var(--bp-speed-fast) linear;
+    transition: background var(--bp-dur-1) linear, color var(--bp-dur-1) linear;
 }
-.lang label + label { margin-left: calc(-1 * var(--bp-stroke)); }
+.lang label + label { margin-left: calc(-1 * var(--bp-line)); }
 .lang label:hover { background: var(--bp-ink-20); }
 .lang label:has(input:checked) { background: var(--bp-ink); color: var(--bp-ground); }
 .lang input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.lang label:has(input:focus-visible) { outline: var(--bp-stroke) solid var(--bp-ink); outline-offset: 2px; }
+.lang label:has(input:focus-visible) { outline: var(--bp-line) solid var(--bp-ink); outline-offset: 2px; }
 
 .theme-field { gap: 8px; }
 
@@ -170,8 +166,8 @@ svg { display: block; }
     gap: 4px;
     margin-bottom: 40px;
     padding-bottom: 12px;
-    border-bottom: var(--bp-stroke) solid var(--bp-ink);
-    animation: enter var(--bp-speed) var(--bp-ease) backwards;
+    border-bottom: var(--bp-line) solid var(--bp-ink);
+    animation: enter var(--bp-dur-2) var(--bp-ease) backwards;
 }
 
 .project-list {
@@ -183,16 +179,15 @@ svg { display: block; }
 .project {
     text-decoration: none;
     -webkit-user-drag: none;
-    transition: transform var(--bp-speed-fast) var(--bp-ease), background var(--bp-speed-fast) linear;
-    animation: enter var(--bp-speed) var(--bp-ease) backwards;
+    transition: transform var(--bp-dur-1) var(--bp-ease), background var(--bp-dur-1) linear;
+    animation: enter var(--bp-dur-2) var(--bp-ease) backwards;
 }
 .project h4 { font-size: var(--bp-display-sm); font-weight: 400; line-height: 1.2; }
 .project:hover { text-decoration: none; }
-a.project:hover { background: var(--bp-ink-09); }
 a.project:active { transform: scale(.985); }
 .canvas.is-dragging .project { transform: none; }
 .project .bp-card__footer { justify-content: space-between; }
-.project-arrow { color: var(--bp-ink-78); transition: transform var(--bp-speed-fast) var(--bp-ease); }
+.project-arrow { color: var(--bp-ink-78); transition: transform var(--bp-dur-1) var(--bp-ease), color var(--bp-dur-1) linear; }
 a.project:hover .project-arrow { transform: translateX(3px); }
 .project.is-quiet { border-color: var(--bp-ink-62); color: var(--bp-ink-78); }
 .project.is-quiet .bp-card__title { border-bottom-color: var(--bp-ink-62); }
@@ -228,7 +223,7 @@ a.project:hover .project-arrow { transform: translateX(3px); }
     color: var(--bp-ink-78);
 }
 
-.note { width: max-content; padding: 8px 12px; border: var(--bp-stroke) solid var(--bp-ink-62); }
+.note { width: max-content; padding: 8px 12px; border: var(--bp-line) solid var(--bp-ink-62); }
 
 /* the sheet's own edge, with its size dimensioned */
 .sheet-edge {
